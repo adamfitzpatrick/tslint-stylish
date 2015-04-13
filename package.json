@@ -1,12 +1,12 @@
 {
-  "name": "tslint-stylish",
+  "name": "gulp-tslint-stylish",
   "version": "0.1.0",
   "description": "Reporter for tslint along the lines of jshint-stylish",
   "author": "Adam Fitzpatrick <adam@muneris.net>",
   "readme": "README.md",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "git@github.com:pteropus/gulp-tslint-stylish.git"
   },
   "devDependencies": {
     "assert": "^1.3.0",

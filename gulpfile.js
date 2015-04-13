@@ -8,29 +8,20 @@
   var tsc = require('gulp-typescript');
   var watch = require('gulp-watch');
 
-  function fakeTslint() {
-    gulp.src('test/fixtures/TestSrc.ts')
-      .pipe(tslint())
-      .pipe(tslint.report(stylish, {
-        emitError: false,
-        bell: false
-      }));
-  }
-  gulp.task('lint', fakeTslint);
-
   var typescriptOptions = {
     declarationFiles: false,
     noExternalResolve: false,
     module: 'commonjs'
   };
-  function tsCompile() {
+  function tsCompile(cb) {
     gulp.src('src/*.ts')
       .pipe(tslint())
-      .pipe(tslint.report('verbose', {
+      .pipe(tslint.report(stylish, {
         emitError: false
       }))
       .pipe(tsc(typescriptOptions))
-      .js.pipe(gulp.dest(''));
+      .js.pipe(gulp.dest(''))
+      .on('end', cb);
   }
   gulp.task('compile', tsCompile);
 
@@ -40,13 +31,13 @@
   }
   gulp.task('test', tests);
 
-  gulp.task('default', ['test']);
+  gulp.task('default', ['compile'], tests);
 
   gulp.task('watch:source', function () {
     watch([
       'src/*.ts',
       'test/*.js'
-    ], { verbose: true, name: 'Source' }, tsCompile);
+    ], { verbose: true, name: 'Source' }, tsCompile(tests));
   });
 
 }());
