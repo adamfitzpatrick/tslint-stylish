@@ -13,8 +13,8 @@ var Stylish;
             this.linterOutputArray = linterOutputArray;
             this.count = "    " + chalk.red(logSymbols.error) + " " + this.linterOutputArray.length + " error" + (this.linterOutputArray.length > 1 ? "s" : "");
             this.options = options || {};
-            this.options.sort = options.sort || (typeof options.sort === "undefined");
-            this.options.bell = options.bell || (typeof options.bell === "undefined");
+            this.options.sort = this.options.sort || (typeof this.options.sort === "undefined");
+            this.options.bell = this.options.bell || (typeof this.options.bell === "undefined");
         }
         Reporter.prototype.getFailures = function () {
             var failures = [];

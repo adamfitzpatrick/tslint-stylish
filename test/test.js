@@ -16,6 +16,10 @@
   };
   var log = [];
   
+  var lintedFile = {
+    path: "/Users/adam.fitzpatrick/play/gulp-tslint-stylish/test/fixtures/TestSrc.ts"
+  };
+
   var lintOutput = [
       {
         "name":"TestSrc.ts",
@@ -48,25 +52,51 @@
       }
     ];
 
+
+
   var errors = {};
-  errors.title = '\n  \u001b[4mTestSrc.ts\u001b[24m\n';
+  errors.title = '\n\u001b[4mTestSrc.ts\u001b[24m\n';
   errors.content = '      \u001b[90mline 17\u001b[39m  \u001b[90mcol 24\u001b[39m' +
       '  \u001b[31m\' should be "\u001b[39m\n      \u001b[90mline 19\u001b[39m  ' +
       '\u001b[90mcol 28\u001b[39m  \u001b[31mfile should end with a ' +
       'newline\u001b[39m';
+  errors.unsorted = "      \u001b[90mline 19\u001b[39m  \u001b[90mcol 28\u001b[39m  " +
+      "\u001b[31mfile should end with a newline\u001b[39m\n      \u001b[90mline " +
+      "17\u001b[39m  \u001b[90mcol 24\u001b[39m  \u001b[31m' should be \"\u001b[39m";
   errors.count = '\n\n    \u001b[31m\u001b[31m✖\u001b[31m\u001b[39m 2 errors\n\n';
-
 
   describe('index.js', function () {
 
-    it('provides output as expected', function () {
+    beforeEach(function () {
       log = [];
-      stylish(lintOutput);
+      stylish(lintOutput,lintedFile);
+    });
+
+    it('provides output as expected', function () {
       assert.equal(log[0], errors.title);
       assert.equal(log[1], errors.content);
       assert.equal(log[2], errors.count);
     });
 
+    it('sorts errors by default and when requested, but not if sort = false', function () {
+      assert.equal(log[1], errors.content);
+      log = [];
+      stylish(lintOutput, lintedFile, {sort: true});
+      assert.equal(log[1], errors.content);
+      log = [];
+      stylish(lintOutput, lintedFile, {sort: false});
+      assert.equal(log[1], errors.unsorted);
+    });
+
+    it('emits the system bell by default and when requested, but not if bell = false', function () {
+      assert.equal(log[3], '\u0007');
+      log = [];
+      stylish(lintOutput, lintedFile, {bell: true});
+      assert.equal(log[3], '\u0007');
+      log = [];
+      stylish(lintOutput, lintedFile, {bell: false});
+      assert.equal(log.length, 3);
+    });
   });
 
   describe('Gulp linter', function () {
