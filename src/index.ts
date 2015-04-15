@@ -44,14 +44,12 @@ module Stylish {
                 (this.linterOutputArray.length > 1 ? "s" : "");
 
             this.options = options || {};
-            this.options.sort = this.options.sort || (typeof this.options.sort === "undefined");
-            this.options.bell = this.options.bell || (typeof this.options.bell === "undefined");
         }
 
         getFailures(): string {
             var failures = [];
 
-            if (this.options.sort) {
+            if (this.options.sort !== false) {
                 this.linterOutputArray = _.sortBy(this.linterOutputArray, function (n) {
                     return n.startPosition.line;
                 });
@@ -73,7 +71,7 @@ module Stylish {
             process.stdout.write("\n" + this.fileName + "\n");
             process.stdout.write(this.getFailures());
             process.stdout.write("\n\n" + this.count + "\n\n");
-            if (this.options.bell) { process.stdout.write("\x07"); }
+            if (this.options.bell !== false) { process.stdout.write("\x07"); }
         }
     }
 
