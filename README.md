@@ -11,7 +11,7 @@ Note that this is designed to accept output from gulp-tslint.  Currently this mo
 available by cloning the repository, or pointing `npm` directly here:
 
 ```
-npm install https://github.com/pteropus/gulp-tslint-stylish/tarball/v0.1.0
+npm install https://github.com/pteropus/gulp-tslint-stylish/tarball/v0.1.1
 ```
 
 Usage
