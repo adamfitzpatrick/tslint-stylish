@@ -1,10 +1,9 @@
 {
   "name": "gulp-tslint-stylish",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Reporter for tslint along the lines of jshint-stylish",
   "author": "Adam Fitzpatrick <pteropus2012@gmail.com>",
-  "license": "MITNFA",
-  "readme": "README.md",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/pteropus/gulp-tslint-stylish/issues",
     "email": "pteropus2012@gmail.com"
