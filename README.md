@@ -7,11 +7,11 @@ Typescript lint reporter for gulp-tslint along the lines of jshint-stylish.  A s
 
 Installation
 ------------
-Note that this is designed to accept output from gulp-tslint.  Currently this module is only
-available by cloning the repository, or pointing `npm` directly here:
+Note that this is designed to accept output from gulp-tslint, which must be installed separately.
+To install this package:
 
 ```
-npm install https://github.com/pteropus/gulp-tslint-stylish/tarball/v0.1.1
+npm install gulp-tslint-stylish
 ```
 
 Usage

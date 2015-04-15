@@ -1,0 +1,6 @@
+specs/
+src/
+typings/
+tslint.json
+gulpfile.js
+.gitignore
