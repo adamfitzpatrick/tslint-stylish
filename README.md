@@ -1,5 +1,8 @@
 gulp-tslint-stylish
 ===================
+
+![Build Status](https://travis-ci.org/pteropus/gulp-tslint-stylish.svg?branch=master)
+
 Typescript lint reporter for gulp-tslint along the lines of jshint-stylish.  A special thanks to
 [Sindre Sorhus](https://github.com/sindresorhus) for the reporter design, and to
 [Panu Horsmalahti](https://github.com/panuhorsmalahti) for creating
