@@ -11,7 +11,9 @@ var Stylish;
         function Reporter(linterOutputArray, file, options) {
             this.fileName = chalk.underline(path.basename(file.path));
             this.linterOutputArray = linterOutputArray;
-            this.count = "    " + chalk.red(logSymbols.error) + " " + this.linterOutputArray.length + " error" + (this.linterOutputArray.length > 1 ? "s" : "");
+            this.count = "    " + chalk.red(logSymbols.error) + " " +
+                this.linterOutputArray.length + " error" +
+                (this.linterOutputArray.length > 1 ? "s" : "");
             this.options = options || {};
         }
         Reporter.prototype.getFailures = function () {
@@ -24,8 +26,8 @@ var Stylish;
             this.linterOutputArray.forEach(function (error) {
                 failures.push([
                     "    ",
-                    chalk.gray("line " + error.startPosition.line),
-                    chalk.gray("col " + error.startPosition.character),
+                    chalk.gray("line " + (error.startPosition.line + 1)),
+                    chalk.gray("col " + (error.startPosition.character + 1)),
                     chalk.red(error.failure)
                 ]);
             });

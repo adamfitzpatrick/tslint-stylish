@@ -20,7 +20,11 @@ var Logger = (function () {
         };
         process.stdout.write = write;
         console.log = function () {
-            _this._write(util.format.apply(null, arguments) + "\n");
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i - 0] = arguments[_i];
+            }
+            _this._write(util.format.apply(null, args) + "\n");
         };
     }
     Logger.prototype.getLog = function () {
@@ -80,9 +84,12 @@ var Specs = (function () {
         });
         describe("gulp linter", function () {
             function linter(cb) {
-                gulp.src("specs/fixtures/TestSrc.ts").pipe(tslint()).pipe(tslint.report(stylish, {
+                gulp.src("specs/fixtures/TestSrc.ts")
+                    .pipe(tslint())
+                    .pipe(tslint.report(stylish, {
                     emitError: false
-                })).on("end", cb);
+                }))
+                    .on("end", cb);
             }
             it("should be used to format report output from gulp-tslint", function (done) {
                 _this.logger.clearLog();
@@ -125,8 +132,7 @@ var TestParams = (function () {
                 "character": 28
             },
             "ruleName": "eofline"
-        },
-        {
+        }, {
             "name": "TestSrc.ts",
             "failure": "\' should be \"",
             "startPosition": {
@@ -144,8 +150,13 @@ var TestParams = (function () {
     ];
     TestParams.FORMATTEDOUTPUT = {
         title: "\n\u001b[4mTestSrc.ts\u001b[24m\n",
-        contentSorted: "      \u001b[90mline 17\u001b[39m  \u001b[90mcol 24\u001b[39m" + "  \u001b[31m\' should be \"\u001b[39m\n      \u001b[90mline 19\u001b[39m  " + "\u001b[90mcol 28\u001b[39m  \u001b[31mfile should end with a " + "newline\u001b[39m",
-        contentUnsorted: "      \u001b[90mline 19\u001b[39m  \u001b[90mcol 28\u001b[39m  " + "\u001b[31mfile should end with a newline\u001b[39m\n      \u001b[90mline " + "17\u001b[39m  \u001b[90mcol 24\u001b[39m  \u001b[31m\' should be \"\u001b[39m",
+        contentSorted: "      \u001b[90mline 18\u001b[39m  \u001b[90mcol 25\u001b[39m" +
+            "  \u001b[31m\' should be \"\u001b[39m\n      \u001b[90mline 20\u001b[39m  " +
+            "\u001b[90mcol 29\u001b[39m  \u001b[31mfile should end with a " +
+            "newline\u001b[39m",
+        contentUnsorted: "      \u001b[90mline 20\u001b[39m  \u001b[90mcol 29\u001b[39m  " +
+            "\u001b[31mfile should end with a newline\u001b[39m\n      \u001b[90mline " +
+            "18\u001b[39m  \u001b[90mcol 25\u001b[39m  \u001b[31m\' should be \"\u001b[39m",
         count: "\n\n    \u001b[31m\u001b[31m✖\u001b[31m\u001b[39m 2 errors\n\n",
         bell: "\u0007"
     };

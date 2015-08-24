@@ -31,8 +31,8 @@ class Logger {
         };
         process.stdout.write = write;
 
-        console.log = () => {
-            this._write(util.format.apply(null, arguments) + "\n");
+        console.log = (...args: string[]) => {
+            this._write(util.format.apply(null, args) + "\n");
         };
     }
 
@@ -170,13 +170,13 @@ class TestParams {
     ];
     static FORMATTEDOUTPUT = {
         title: "\n\u001b[4mTestSrc.ts\u001b[24m\n",
-        contentSorted: "      \u001b[90mline 17\u001b[39m  \u001b[90mcol 24\u001b[39m" +
-            "  \u001b[31m\' should be \"\u001b[39m\n      \u001b[90mline 19\u001b[39m  " +
-            "\u001b[90mcol 28\u001b[39m  \u001b[31mfile should end with a " +
+        contentSorted: "      \u001b[90mline 18\u001b[39m  \u001b[90mcol 25\u001b[39m" +
+            "  \u001b[31m\' should be \"\u001b[39m\n      \u001b[90mline 20\u001b[39m  " +
+            "\u001b[90mcol 29\u001b[39m  \u001b[31mfile should end with a " +
             "newline\u001b[39m",
-        contentUnsorted: "      \u001b[90mline 19\u001b[39m  \u001b[90mcol 28\u001b[39m  " +
+        contentUnsorted: "      \u001b[90mline 20\u001b[39m  \u001b[90mcol 29\u001b[39m  " +
             "\u001b[31mfile should end with a newline\u001b[39m\n      \u001b[90mline " +
-            "17\u001b[39m  \u001b[90mcol 24\u001b[39m  \u001b[31m\' should be \"\u001b[39m",
+            "18\u001b[39m  \u001b[90mcol 25\u001b[39m  \u001b[31m\' should be \"\u001b[39m",
         count: "\n\n    \u001b[31m\u001b[31m✖\u001b[31m\u001b[39m 2 errors\n\n",
         bell: "\u0007"
     }
