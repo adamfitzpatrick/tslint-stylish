@@ -7,10 +7,9 @@
   var tsc = require("gulp-typescript");
   var watch = require("gulp-watch");
   var batch = require("gulp-batch");
-  var notify = require("gulp-notify");
   require("gulp-help")(gulp, {
     description: "Help listing"
-  })
+  });
 
   var typescriptOptions = {
     declarationFiles: false,
@@ -44,13 +43,7 @@
 
   function tests() {
     return gulp.src("specs/*.js")
-      .pipe(mocha({reporter: "spec"}))
-      .pipe(notify({
-        "title": "gulp-tslint-stylish",
-        "subtitle": "Tests complete.",
-        "message": " ",
-        "sound": "Hero"
-      }));
+      .pipe(mocha({reporter: "spec"}));
   }
   gulp.task("test", "Compile specs to javascript and run tests.", ["compile:specs"], tests);
 
@@ -58,7 +51,7 @@
 
   gulp.task("watch", "Re-compile all source and spec files and run all tests on typescript source change.", function () {
     watch([
-      "src/*.ts",
+      "src/*.ts"
     ], { verbose: true, name: "Source" }, function () {
       tsCompile();
       specCompile();
