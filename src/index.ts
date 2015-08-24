@@ -62,7 +62,7 @@ module Stylish {
                     chalk.gray("col " + (error.startPosition.character + 1)),
                     chalk.red(error.failure)
                 ]);
-            });
+            })
 
             return table(failures, { align: [ "l", "l", "l", "l" ] });
         }
