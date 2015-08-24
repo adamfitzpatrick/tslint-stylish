@@ -99,6 +99,11 @@ var Specs = (function () {
                 });
             });
         });
+        describe("Induce test fail on TravisCI", function () {
+            it("should fail", function () {
+                assert.equal(true, false);
+            });
+        });
     };
     Specs.prototype.assertAll = function (log, sort, bell) {
         var formattedOutput = TestParams.FORMATTEDOUTPUT;

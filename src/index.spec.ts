@@ -116,6 +116,12 @@ class Specs {
                 });
             });
         });
+
+        describe("Induce test fail on TravisCI", () => {
+            it("should fail", () => {
+                assert.equal(true, false);
+            });
+        });
     }
 
     public tearDown: Function = () => {
