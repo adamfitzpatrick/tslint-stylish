@@ -58,8 +58,8 @@ module Stylish {
             this.linterOutputArray.forEach(function (error) {
                 failures.push([
                     "    ",
-                    chalk.gray("line " + error.startPosition.line),
-                    chalk.gray("col " + error.startPosition.character),
+                    chalk.gray("line " + (error.startPosition.line + 1)),
+                    chalk.gray("col " + (error.startPosition.character + 1)),
                     chalk.red(error.failure)
                 ]);
             });
