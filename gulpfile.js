@@ -41,20 +41,20 @@
     gulp.task("compile:src", "Compile source typescript to javascript.", tsCompile);
 
     function specCompile() {
-        return gulp.src("src/*.spec.ts")
+        return gulp.src(["specs/**/*.ts","!specs/fixtures/**/*.ts"])
             .pipe(debug({title: "specCompile"}))
             .pipe(tslint())
             .pipe(tslint.report("verbose", {
                 emitError: isProd()
             }))
             .pipe(tsc(typescriptOptions))
-            .js.pipe(gulp.dest("specs/"));
+            .js.pipe(gulp.dest("specs/compiledSpecs"));
     }
 
     gulp.task("compile:specs", "Compile specs typescript to javascript.", specCompile);
 
     function tests() {
-        return gulp.src("specs/*.js")
+        return gulp.src("specs/compiledSpecs/*.js")
             .pipe(mocha({reporter: "spec"}));
     }
 
@@ -65,13 +65,14 @@
 
     gulp.task("watch", "Re-compile all source and spec files and run all tests on typescript source change.", function () {
         watch([
-            "src/*.ts"
+            "src/*.ts",
+            "specs/**/*.ts"
         ], {verbose: true, name: "Source"}, function () {
             tsCompile();
             specCompile();
         });
 
-        watch("**/*.js", {verbose: true, name: "Test"}, batch({timeout: 200}, tests));
+        watch("**/*.js", {verbose: false, name: "Test"}, batch({timeout: 500}, tests));
     });
 
 }());

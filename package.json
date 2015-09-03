@@ -12,7 +12,7 @@
     "type": "git",
     "url": "git@github.com:pteropus/gulp-tslint-stylish.git"
   },
-  "main": "release/index.js",
+  "main": "index.js",
   "keywords": [
     "gulp",
     "gulpplugin",

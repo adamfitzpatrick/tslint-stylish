@@ -24,6 +24,7 @@ var Stylish;
                 });
             }
             this.linterOutputArray.forEach(function (error) {
+                // Error positions are zero-based from tslint, and must be incremented by 1
                 failures.push([
                     "    ",
                     chalk.gray("line " + (error.startPosition.line + 1)),
