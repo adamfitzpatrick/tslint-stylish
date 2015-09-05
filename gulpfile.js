@@ -3,7 +3,6 @@
 
     var del = require("del");
     var gulp = require("gulp");
-    var filter = require("gulp-filter");
     var mocha = require("gulp-mocha");
     var tslint = require("gulp-tslint");
     var tsc = require("gulp-typescript");
