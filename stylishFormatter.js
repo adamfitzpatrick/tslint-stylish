@@ -25,4 +25,4 @@ var Formatter = (function () {
     };
     return Formatter;
 })();
-module.exports = Formatter;
+exports.Formatter = Formatter;

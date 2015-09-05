@@ -4,7 +4,7 @@ var _ = require("lodash");
 
 import Reporter = require("./reporter");
 
-class Formatter {
+export class Formatter {
 
     private files: { [name: string]: Stylish.IPalantirRuleFailureObject[] } = {};
 
@@ -25,5 +25,3 @@ class Formatter {
         });
     }
 }
-
-export = Formatter;

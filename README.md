@@ -1,7 +1,7 @@
 tslint-stylish
 ===================
 
-![Build Status](https://travis-ci.org/adamfitzpatrick/tslint-stylish.svg?branch=develop)
+![Build Status](https://travis-ci.org/adamfitzpatrick/tslint-stylish.svg?branch=master)
 
 Typescript lint reporter for tslint and gulp-tslint along the lines of jshint-stylish.  Support
 for grunt will be added soon.  Note that this package will eventually replace gulp-tslint-stylish.
