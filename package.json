@@ -22,6 +22,7 @@
     "reporter"
   ],
   "devDependencies": {
+    "del": "^2.0.1",
     "gulp": "^3.8.11",
     "gulp-batch": "^1.0.5",
     "gulp-debug": "^2.1.0",

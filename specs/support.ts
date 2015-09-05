@@ -1,4 +1,5 @@
 var util = require("util");
+import RuleFailure = require("../src/ruleFailure");
 
 export class LogInterceptor {
     private static _instance: LogInterceptor = null;
@@ -40,9 +41,48 @@ export class TestConstants {
     static LINTEDFILE = {
         path: process.cwd() + "/specs/fixtures/TestSrc.ts"
     };
-    static LINTOUTPUT = [
+    static PALANTIRLINTOUTPUT: Stylish.IPalantirRuleFailureObject[] = [
         {
-            "name": "NOFILE",
+            "fileName": "NOFILE",
+            "failure": "file should end with a newline",
+            "startPosition": {
+                "position": 442,
+                "lineAndCharacter": {
+                    "line": 18,
+                    "character": 27
+                }
+            },
+            "endPosition": {
+                "position": 442,
+                "lineAndCharacter": {
+                    "line": 18,
+                    "character": 27
+                }
+            },
+            "ruleName": "eofline"
+        }, {
+            "fileName": "NOFILE",
+            "failure": "\' should be \"",
+            "startPosition": {
+                "position": 391,
+                "lineAndCharacter": {
+                    "line": 16,
+                    "character": 23
+                }
+            },
+            "endPosition": {
+                "position": 397,
+                "lineAndCharacter": {
+                    "line": 16,
+                    "character": 29
+                }
+            },
+            "ruleName": "quotemark"
+        }
+    ];
+    static LINTOUTPUT: Stylish.IRuleFailureObject[] = [
+        {
+            "fileName": "NOFILE",
             "failure": "file should end with a newline",
             "startPosition": {
                 "position": 442,
@@ -56,7 +96,7 @@ export class TestConstants {
             },
             "ruleName": "eofline"
         }, {
-            "name": "NOFILE",
+            "fileName": "NOFILE",
             "failure": "\' should be \"",
             "startPosition": {
                 "position": 391,
@@ -73,6 +113,7 @@ export class TestConstants {
     ];
     static FORMATTEDOUTPUT = {
         title: "\n\u001b[4mTestSrc.ts\u001b[24m\n",
+        titleNoFile: "\n\u001b[4mNOFILE\u001b[24m\n",
         contentSorted: "      \u001b[90mline 17\u001b[39m  \u001b[90mcol 24\u001b[39m" +
         "  \u001b[31m\' should be \"\u001b[39m\n      \u001b[90mline 19\u001b[39m  " +
         "\u001b[90mcol 28\u001b[39m  \u001b[31mfile should end with a " +
@@ -83,4 +124,7 @@ export class TestConstants {
         count: "\n\n    \u001b[31m\u001b[31m✖\u001b[31m\u001b[39m 2 errors\n\n",
         bell: "\u0007"
     };
+}
+export function clone(object: Object): Object {
+    return JSON.parse(JSON.stringify(object));
 }

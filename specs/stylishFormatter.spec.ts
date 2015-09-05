@@ -1,12 +1,13 @@
 /// <reference path="../typings/node.d.ts" />
 /// <reference path="../typings/mocha.d.ts" />
 
-import support = require("./support");
-var TestConstants = support.TestConstants;
-var stylishFormatter = require(process.cwd() + "/release/stylishFormatter.js");
+var Formatter = require(process.cwd() + "/compiled/src/stylishFormatter");
 var assert = require("assert");
 var fs = require("fs");
 
+import support = require("./support");
+
+var TestConstants = support.TestConstants;
 
 class StylishFormatterSpecs {
     private nextTest: () => void;
@@ -17,16 +18,19 @@ class StylishFormatterSpecs {
         describe("stylishFormatter", () => {
             var formatter;
             beforeEach(() => {
-                formatter = new stylishFormatter.Formatter();
+                formatter = new Formatter();
             });
 
             after(() => {
                 this.tearDown();
             });
 
-            it("outputs raw JSON as received", () => {
+            it("outputs properly formatted stylish data", () => {
                 var report = formatter.format(TestConstants.LINTOUTPUT);
-                assert.equal(JSON.stringify(TestConstants.LINTOUTPUT), report);
+                var formattedOutput = TestConstants.FORMATTEDOUTPUT;
+                var expected = formattedOutput.titleNoFile +
+                    formattedOutput.contentSorted + formattedOutput.count;
+                assert.equal(expected, report);
             });
         });
     }
@@ -36,4 +40,4 @@ class StylishFormatterSpecs {
     };
 }
 
-module.exports = StylishFormatterSpecs;
+export = StylishFormatterSpecs;

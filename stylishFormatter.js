@@ -1,24 +1,28 @@
-/// <reference path="../typings/node.d.ts"/>
-/// <reference path="../typings/tslint.d.ts"/>
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
-var Stylish;
-(function (Stylish) {
-    var _ = require("lodash");
-    var Formatter = (function (_super) {
-        __extends(Formatter, _super);
-        function Formatter() {
-            _super.apply(this, arguments);
-        }
-        Formatter.prototype.format = function (failures) {
-            return JSON.stringify(failures);
-        };
-        return Formatter;
-    })(Lint.Formatters.AbstractFormatter);
-    Stylish.Formatter = Formatter;
-})(Stylish || (Stylish = {}));
-module.exports.Formatter = Stylish.Formatter;
+/// <reference path="../typings/stylish.d.ts"/>
+var _ = require("lodash");
+var Reporter = require("./reporter");
+var Formatter = (function () {
+    function Formatter() {
+        this.files = {};
+    }
+    Formatter.prototype.format = function (failures) {
+        this.invertLints(failures);
+        var output = "";
+        _.forEach(this.files, function (linterOutput) {
+            var reporter = new Reporter(linterOutput, linterOutput[0].fileName, { bell: false });
+            output += reporter.toString();
+        });
+        return output;
+    };
+    Formatter.prototype.invertLints = function (failures) {
+        var _this = this;
+        failures.forEach(function (failure) {
+            if (!_this.files[failure.fileName]) {
+                _this.files[failure.fileName] = [];
+            }
+            _this.files[failure.fileName].push(failure);
+        });
+    };
+    return Formatter;
+})();
+module.exports = Formatter;

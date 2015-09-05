@@ -1,7 +1,9 @@
 (function () {
     "use strict";
 
+    var del = require("del");
     var gulp = require("gulp");
+    var filter = require("gulp-filter");
     var mocha = require("gulp-mocha");
     var tslint = require("gulp-tslint");
     var tsc = require("gulp-typescript");
@@ -24,55 +26,59 @@
         module: "commonjs"
     };
 
+    function clean(cb) {
+        del([
+            "compiled",
+            "index.js",
+            "stylishFormatter.js",
+            "reporter.js",
+            "ruleFailure.js"
+        ]);
+        cb();
+    }
+
+    gulp.task("clean", clean);
+
     function tsCompile() {
-        return gulp.src([
-            "src/*.ts",
-            "!src/*.spec.ts"
-        ])
-            .pipe(debug({title: "tsCompile"}))
+        return gulp.src("src/**/*.ts")
             .pipe(tslint())
             .pipe(tslint.report("verbose", {
                 emitError: isProd()
             }))
             .pipe(tsc(typescriptOptions))
-            .js.pipe(gulp.dest("release/"));
+            .js.pipe(gulp.dest("compiled/src"));
     }
-
-    gulp.task("compile:src", "Compile source typescript to javascript.", tsCompile);
 
     function specCompile() {
-        return gulp.src(["specs/**/*.ts","!specs/fixtures/**/*.ts"])
-            .pipe(debug({title: "specCompile"}))
+        return gulp.src(["specs/**/*.ts", "!specs/fixtures/**/*"])
             .pipe(tslint())
             .pipe(tslint.report("verbose", {
                 emitError: isProd()
             }))
             .pipe(tsc(typescriptOptions))
-            .js.pipe(gulp.dest("specs/compiledSpecs"));
+            .js.pipe(gulp.dest("compiled/specs"));
     }
 
-    gulp.task("compile:specs", "Compile specs typescript to javascript.", specCompile);
+    gulp.task("compile:src", "Compile source typescript to javascript.", ["clean"], tsCompile);
+    gulp.task("compile:spec", "Compile typescript specs to javascript.", ["clean"], specCompile);
 
-    function tests() {
-        return gulp.src("specs/compiledSpecs/*.js")
+    function unitTests() {
+        return gulp.src("compiled/specs/*.spec.js")
             .pipe(mocha({reporter: "spec"}));
     }
 
-    gulp.task("test", "Compile specs to javascript and run tests.", ["compile:specs"], tests);
+    gulp.task("default", "Compile source and specs to javascript and run tests.", ["compile:src", "compile:spec"], unitTests);
 
-    gulp.task("default", "Compile source and specs to javascript and run tests.", ["compile:src", "compile:specs"], tests);
-    gulp.task("prod", "Build for production, which fails on any error.", ["default"]);
+    function prod() {
+        return gulp.src([
+            "compiled/src/*.js"
+        ])
+            .pipe(gulp.dest("./"));
+    }
+    gulp.task("prod", "Build for production: fails on error.", ["default"], prod);
 
-    gulp.task("watch", "Re-compile all source and spec files and run all tests on typescript source change.", function () {
-        watch([
-            "src/*.ts",
-            "specs/**/*.ts"
-        ], {verbose: true, name: "Source"}, function () {
-            tsCompile();
-            specCompile();
-        });
-
-        watch("**/*.js", {verbose: false, name: "Test"}, batch({timeout: 500}, tests));
+    gulp.task("watch", function () {
+        gulp.watch(["src/**/*.ts", "specs/**/*.ts"], ["default"]);
     });
 
 }());
