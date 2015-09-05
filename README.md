@@ -1,28 +1,33 @@
-gulp-tslint-stylish
+tslint-stylish
 ===================
 
-![Build Status](https://travis-ci.org/pteropus/gulp-tslint-stylish.svg?branch=develop)
+![Build Status](https://travis-ci.org/pteropus/tslint-stylish.svg?branch=develop)
 
-Typescript lint reporter for gulp-tslint along the lines of jshint-stylish.  A special thanks to
+Typescript lint reporter for tslint and gulp-tslint along the lines of jshint-stylish.  Support
+for grunt will be added soon.  Note that this package will eventually replace gulp-tslint-stylish.
+
+Thank you to
 [Sindre Sorhus](https://github.com/sindresorhus) for the reporter design, and to
 [Panu Horsmalahti](https://github.com/panuhorsmalahti) for creating
 [gulp-tslint](https://github.com/panuhorsmalahti/gulp-tslint).
 
 Installation
 ------------
-Note that this is designed to accept output from gulp-tslint, which must be installed separately.
+Note that this is designed to accept output from tslint and gulp-tslint, which must be installed separately.
 To install this package:
 
 ```
-npm install gulp-tslint-stylish
+npm install tslint-stylish
 ```
 
 Usage
 -----
 
+Gulp
+
 ```
 var gulp = require('gulp');
-var tslint = require('gulp-tslint');
+var tslint = require('gulptslint');
 var stylish = require('gulp-tslint-stylish');
 
 gulp.task('lint', function () {
