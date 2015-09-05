@@ -1,12 +1,13 @@
 /// <reference path="../typings/node.d.ts" />
 /// <reference path="../typings/mocha.d.ts" />
 
-var Formatter = require(process.cwd() + "/compiled/src/stylishFormatter");
 var assert = require("assert");
 var fs = require("fs");
 
+import StylishFormatter = require("../src/stylishFormatter");
 import support = require("./support");
 
+var Formatter = StylishFormatter.Formatter;
 var TestConstants = support.TestConstants;
 
 class StylishFormatterSpecs {
