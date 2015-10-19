@@ -13,6 +13,7 @@ type IRuleFailureObject = Stylish.IRuleFailureObject;
 type IOptions = Stylish.IOptions;
 
 class Reporter {
+    private fullPath: string;
     private fileName: string;
     private count: number;
     private ruleFailures: RuleFailure[];
@@ -21,6 +22,9 @@ class Reporter {
     constructor(linterOutputArray: IRuleFailureObject[], file: Vinyl.File, options?: IOptions);
     constructor(linterOutputArray: IPalantirRuleFailureObject[], file: string, options?: IOptions);
     constructor(linterOutputArray: any, file: any, options?: any) {
+        if (options && options.fullPath) {
+            this.fullPath = file.path;
+        }
         var fileStr = file.path || file;
         this.fileName = path.basename(fileStr);
         this.ruleFailures = RuleFailure.ruleFailureFactory(linterOutputArray);
@@ -44,6 +48,9 @@ class Reporter {
                 this.generateFailureStrings() +
                 "\n\n" + count + "\n\n";
         if (this.options.bell !== false) { output += "\x07"; }
+        if (this.fullPath) {
+            output = this.fullPath + output;
+        }
         return output;
     }
 

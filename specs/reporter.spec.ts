@@ -96,8 +96,9 @@ class ReporterSpec {
 
             describe("publish", () => {
                 it("should output the stylish string to stdout", () => {
-                    var reporter = new Reporter(TestConstants.LINTOUTPUT, <Vinyl.File> TestConstants.LINTEDFILE);
-                    var expected = TestConstants.FORMATTEDOUTPUT.title +
+                    var reporter = new Reporter(TestConstants.LINTOUTPUT, <Vinyl.File> TestConstants.LINTEDFILE, { fullPath: true });
+                    var expected = TestConstants.FORMATTEDOUTPUT.fullPath +
+                        TestConstants.FORMATTEDOUTPUT.title +
                         TestConstants.FORMATTEDOUTPUT.contentSorted +
                         TestConstants.FORMATTEDOUTPUT.count +
                         TestConstants.FORMATTEDOUTPUT.bell;

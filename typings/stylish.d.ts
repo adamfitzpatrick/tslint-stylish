@@ -40,5 +40,6 @@ declare module Stylish {
     interface IOptions {
         sort?: boolean;
         bell?: boolean;
+        fullPath?: boolean;
     }
 }
