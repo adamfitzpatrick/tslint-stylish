@@ -7,11 +7,10 @@ var path = require("path");
 var RuleFailure = require("./ruleFailure");
 var Reporter = (function () {
     function Reporter(linterOutputArray, file, options) {
-        var fileStr = file.path || file;
-        this.fileName = path.basename(fileStr);
+        this.parseOptions(options);
+        this.parseFilename(file);
         this.ruleFailures = RuleFailure.ruleFailureFactory(linterOutputArray);
         this.count = this.ruleFailures.length;
-        this.options = options || {};
     }
     Reporter.prototype.getFileName = function () { return this.fileName; };
     Reporter.prototype.getCount = function () { return this.count; };
@@ -24,7 +23,7 @@ var Reporter = (function () {
         var output = "\n" + chalk.underline(this.fileName) + "\n" +
             this.generateFailureStrings() +
             "\n\n" + count + "\n\n";
-        if (this.options.bell !== false) {
+        if (this.options.bell) {
             output += "\x07";
         }
         return output;
@@ -34,7 +33,7 @@ var Reporter = (function () {
     };
     Reporter.prototype.generateFailureStrings = function () {
         var failures = [];
-        if (this.options.sort !== false) {
+        if (this.options.sort) {
             this.ruleFailures = _.sortBy(this.ruleFailures, function (n) {
                 return n.startPosition.line;
             });
@@ -49,6 +48,24 @@ var Reporter = (function () {
             ]);
         });
         return table(failures, { align: ["l", "l", "l", "l"] });
+    };
+    Reporter.prototype.parseOptions = function (options) {
+        this.options = options || {};
+        if (this.options.sort !== false) {
+            this.options.sort = true;
+        }
+        if (this.options.bell !== false) {
+            this.options.bell = true;
+        }
+        if (this.options.fullPath !== false) {
+            this.options.fullPath = true;
+        }
+    };
+    Reporter.prototype.parseFilename = function (file) {
+        this.fileName = file.path || file;
+        if (!this.options.fullPath) {
+            this.fileName = path.basename(this.fileName);
+        }
     };
     return Reporter;
 })();

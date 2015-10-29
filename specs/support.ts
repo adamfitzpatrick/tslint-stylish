@@ -112,9 +112,9 @@ export class TestConstants {
         }
     ];
     static FORMATTEDOUTPUT = {
-        fullPath: "\u001b[4m" + process.cwd() + "/specs/fixtures/TestSrc.ts" + "\u001b[24m",
-        title: "\n\u001b[4mTestSrc.ts\u001b[24m\n",
-        titleNoFile: "\n\u001b[4mNOFILE\u001b[24m\n",
+        fullPath: "\n\u001b[4m" + process.cwd() + "/specs/fixtures/TestSrc.ts" + "\u001b[24m\n",
+        filename: "\n\u001b[4mTestSrc.ts\u001b[24m\n",
+        noFile: "\n\u001b[4mNOFILE\u001b[24m\n",
         contentSorted: "      \u001b[90mline 17\u001b[39m  \u001b[90mcol 24\u001b[39m" +
         "  \u001b[31m\' should be \"\u001b[39m\n      \u001b[90mline 19\u001b[39m  " +
         "\u001b[90mcol 28\u001b[39m  \u001b[31mfile should end with a " +

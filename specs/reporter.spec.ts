@@ -2,7 +2,6 @@
 
 var stylish = require(process.cwd() + "/compiled/src/index");
 var assert = require("assert");
-var gulp = require("gulp");
 var tslint = require("gulp-tslint");
 
 import Support = require("./support");
@@ -26,7 +25,7 @@ class ReporterSpec {
 
             beforeEach(() => {
                 reporter = new Reporter(TestConstants.PALANTIRLINTOUTPUT,
-                    "TestSrc.ts", { bell: false, sort: false });
+                    "TestSrc.ts", { bell: false, sort: false, fullPath: false });
             });
 
             after(() => {
@@ -64,29 +63,44 @@ class ReporterSpec {
                 });
 
                 it("should get the options object", () => {
-                    assert.deepEqual(reporter.getOptions(), { bell: false, sort: false });
+                    var expected = { bell: false, sort: false, fullPath: false };
+                    assert.deepEqual(reporter.getOptions(), expected);
                 });
             });
 
             describe("toString", () => {
-                it("should return the stylish string unsorted with no bell", () => {
-                    var expected = TestConstants.FORMATTEDOUTPUT.title +
+                it("should return the stylish string unsorted with short path & no bell", () => {
+                    var expected = TestConstants.FORMATTEDOUTPUT.filename +
                         TestConstants.FORMATTEDOUTPUT.contentUnsorted +
                         TestConstants.FORMATTEDOUTPUT.count;
                     assert.equal(reporter.toString(), expected);
                 });
 
-                it("should return the stylish string sorted with no bell", () => {
-                    var reporter = new Reporter(TestConstants.LINTOUTPUT, <Vinyl.File> TestConstants.LINTEDFILE, { bell: false});
-                    var expected = TestConstants.FORMATTEDOUTPUT.title +
+                it("should return the stylish string sorted with short path & no bell", () => {
+                    var options = { bell: false, fullPath: false };
+                    var reporter = new Reporter(TestConstants.LINTOUTPUT,
+                        <Vinyl.File> TestConstants.LINTEDFILE, options);
+                    var expected = TestConstants.FORMATTEDOUTPUT.filename +
                         TestConstants.FORMATTEDOUTPUT.contentSorted +
                         TestConstants.FORMATTEDOUTPUT.count;
                     assert.equal(reporter.toString(), expected);
                 });
 
-                it("should return the stylish string sorted with bell", () => {
-                    var reporter = new Reporter(TestConstants.LINTOUTPUT, <Vinyl.File> TestConstants.LINTEDFILE);
-                    var expected = TestConstants.FORMATTEDOUTPUT.title +
+                it("should return the stylish string sorted with short path & bell", () => {
+                    var options = { fullPath: false };
+                    var reporter = new Reporter(TestConstants.LINTOUTPUT,
+                        <Vinyl.File> TestConstants.LINTEDFILE, options);
+                    var expected = TestConstants.FORMATTEDOUTPUT.filename +
+                        TestConstants.FORMATTEDOUTPUT.contentSorted +
+                        TestConstants.FORMATTEDOUTPUT.count +
+                        TestConstants.FORMATTEDOUTPUT.bell;
+                    assert.equal(reporter.toString(), expected);
+                });
+
+                it("should return the stylish string sorted with full path & bell", () => {
+                    var reporter = new Reporter(TestConstants.LINTOUTPUT,
+                        <Vinyl.File> TestConstants.LINTEDFILE);
+                    var expected = TestConstants.FORMATTEDOUTPUT.fullPath +
                         TestConstants.FORMATTEDOUTPUT.contentSorted +
                         TestConstants.FORMATTEDOUTPUT.count +
                         TestConstants.FORMATTEDOUTPUT.bell;
@@ -96,9 +110,9 @@ class ReporterSpec {
 
             describe("publish", () => {
                 it("should output the stylish string to stdout", () => {
-                    var reporter = new Reporter(TestConstants.LINTOUTPUT, <Vinyl.File> TestConstants.LINTEDFILE, { fullPath: true });
+                    var reporter = new Reporter(TestConstants.LINTOUTPUT,
+                        <Vinyl.File> TestConstants.LINTEDFILE);
                     var expected = TestConstants.FORMATTEDOUTPUT.fullPath +
-                        TestConstants.FORMATTEDOUTPUT.title +
                         TestConstants.FORMATTEDOUTPUT.contentSorted +
                         TestConstants.FORMATTEDOUTPUT.count +
                         TestConstants.FORMATTEDOUTPUT.bell;
