@@ -29,7 +29,7 @@ class StylishFormatterSpecs {
             it("outputs properly formatted stylish data", () => {
                 var report = formatter.format(TestConstants.LINTOUTPUT);
                 var formattedOutput = TestConstants.FORMATTEDOUTPUT;
-                var expected = formattedOutput.titleNoFile +
+                var expected = formattedOutput.noFile +
                     formattedOutput.contentSorted + formattedOutput.count;
                 assert.equal(expected, report);
             });
