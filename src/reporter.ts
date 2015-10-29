@@ -21,11 +21,10 @@ class Reporter {
     constructor(linterOutputArray: IRuleFailureObject[], file: Vinyl.File, options?: IOptions);
     constructor(linterOutputArray: IPalantirRuleFailureObject[], file: string, options?: IOptions);
     constructor(linterOutputArray: any, file: any, options?: any) {
-        var fileStr = file.path || file;
-        this.fileName = path.basename(fileStr);
+        this.parseOptions(options);
+        this.parseFilename(file);
         this.ruleFailures = RuleFailure.ruleFailureFactory(linterOutputArray);
         this.count = this.ruleFailures.length;
-        this.options = options || {};
     }
 
     public getFileName(): string { return this.fileName; }
@@ -43,7 +42,7 @@ class Reporter {
         var output = "\n" + chalk.underline(this.fileName) + "\n" +
                 this.generateFailureStrings() +
                 "\n\n" + count + "\n\n";
-        if (this.options.bell !== false) { output += "\x07"; }
+        if (this.options.bell) { output += "\x07"; }
         return output;
     }
 
@@ -55,7 +54,7 @@ class Reporter {
     private generateFailureStrings(): string {
         var failures = [];
 
-        if (this.options.sort !== false) {
+        if (this.options.sort) {
             this.ruleFailures = _.sortBy(this.ruleFailures, function (n) {
                 return n.startPosition.line;
             });
@@ -72,6 +71,18 @@ class Reporter {
         });
 
         return table(failures, { align: [ "l", "l", "l", "l" ] });
+    }
+
+    private parseOptions(options): void {
+        this.options = options || {};
+        if (this.options.sort !== false) { this.options.sort = true; }
+        if (this.options.bell !== false) { this.options.bell = true; }
+        if (this.options.fullPath !== false) { this.options.fullPath = true; }
+    }
+
+    private parseFilename(file): void {
+        this.fileName = file.path || file;
+        if (!this.options.fullPath) { this.fileName = path.basename(this.fileName); }
     }
 }
 
