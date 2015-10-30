@@ -1,6 +1,6 @@
 {
   "name": "gulp-tslint-stylish",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "description": "Reporter for tslint along the lines of jshint-stylish",
   "author": "Adam Fitzpatrick <adam@muneris.net>",
   "license": "MIT",
