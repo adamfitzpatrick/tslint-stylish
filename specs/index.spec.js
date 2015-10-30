@@ -127,7 +127,7 @@ var TestParams = (function () {
     function TestParams() {
     }
     TestParams.LINTEDFILE = {
-        path: "/Users/adam.fitzpatrick/play/tslint-stylish/specs/fixtures/TestSrc.ts"
+        path: process.cwd() + "/specs/fixtures/TestSrc.ts"
     };
     TestParams.LINTOUTPUT = [
         {

@@ -149,7 +149,7 @@ class Specs {
 
 class TestParams {
     static LINTEDFILE = {
-        path: "/Users/adam.fitzpatrick/play/tslint-stylish/specs/fixtures/TestSrc.ts"
+        path: process.cwd() + "/specs/fixtures/TestSrc.ts"
     };
     static LINTOUTPUT = [
       {
