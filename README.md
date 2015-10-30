@@ -1,6 +1,6 @@
 tslint-stylish
 ===================
-
+![Dependencies](https://david-dm.org/adamfitzpatrick/tslint-stylish.svg)
 ![Build Status](https://travis-ci.org/adamfitzpatrick/tslint-stylish.svg?branch=master)
 
 Typescript lint reporter for tslint and gulp-tslint along the lines of jshint-stylish.  Support
@@ -63,3 +63,7 @@ Options
 - `bell`
     - Default is `true`
     - When true, emits the system bell with report.
+- `fullPath`
+    - Default is `true`
+    - When true, full path to file is included with report.  When false, only the filename is included.
+    - Contribution courtesy of [Sagar Vadodaria](https://github.com/sagarvadodaria)

@@ -1,6 +1,6 @@
 {
   "name": "tslint-stylish",
-  "version": "2.0.0-beta",
+  "version": "2.1.0-beta",
   "description": "Reporter for tslint along the lines of jshint-stylish",
   "author": "Adam Fitzpatrick <adam@muneris.net>",
   "license": "MIT",
