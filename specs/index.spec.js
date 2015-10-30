@@ -63,25 +63,34 @@ var Specs = (function () {
                 stylish(TestParams.LINTOUTPUT, TestParams.LINTEDFILE);
             });
             it("provides output as expected for minimum args", function () {
-                _this.assertAll(_this.logger.getLog(), true, true);
+                _this.assertAll(_this.logger.getLog(), true, true, true);
             });
             it("sorts formattedOutput by default and when requested, but not if sort = false", function () {
-                _this.assertAll(_this.logger.getLog(), true, true);
+                _this.assertAll(_this.logger.getLog(), true, true, true);
                 _this.logger.clearLog();
                 stylish(TestParams.LINTOUTPUT, TestParams.LINTEDFILE, { sort: true });
-                _this.assertAll(_this.logger.getLog(), true, true);
+                _this.assertAll(_this.logger.getLog(), true, true, true);
                 _this.logger.clearLog();
                 stylish(TestParams.LINTOUTPUT, TestParams.LINTEDFILE, { sort: false });
-                _this.assertAll(_this.logger.getLog(), false, true);
+                _this.assertAll(_this.logger.getLog(), false, true, true);
             });
             it("emits the system bell by default and when requested, but not if bell = false", function () {
-                _this.assertAll(_this.logger.getLog(), true, true);
+                _this.assertAll(_this.logger.getLog(), true, true, true);
                 _this.logger.clearLog();
                 stylish(TestParams.LINTOUTPUT, TestParams.LINTEDFILE, { bell: true });
-                _this.assertAll(_this.logger.getLog(), true, true);
+                _this.assertAll(_this.logger.getLog(), true, true, true);
                 _this.logger.clearLog();
                 stylish(TestParams.LINTOUTPUT, TestParams.LINTEDFILE, { bell: false });
-                _this.assertAll(_this.logger.getLog(), true, false);
+                _this.assertAll(_this.logger.getLog(), true, false, true);
+            });
+            it("shows the full path by default and when requested, but not if fullPath = false", function () {
+                _this.assertAll(_this.logger.getLog(), true, true, true);
+                _this.logger.clearLog();
+                stylish(TestParams.LINTOUTPUT, TestParams.LINTEDFILE, { fullPath: true });
+                _this.assertAll(_this.logger.getLog(), true, true, true);
+                _this.logger.clearLog();
+                stylish(TestParams.LINTOUTPUT, TestParams.LINTEDFILE, { fullPath: false });
+                _this.assertAll(_this.logger.getLog(), true, true, false);
             });
         });
         describe("gulp linter", function () {
@@ -96,15 +105,16 @@ var Specs = (function () {
             it("should be used to format report output from gulp-tslint", function (done) {
                 _this.logger.clearLog();
                 linter(function () {
-                    _this.assertAll(_this.logger.getLog(), true, true);
+                    _this.assertAll(_this.logger.getLog(), true, true, true);
                     done();
                 });
             });
         });
     };
-    Specs.prototype.assertAll = function (log, sort, bell) {
+    Specs.prototype.assertAll = function (log, sort, bell, fullPath) {
         var formattedOutput = TestParams.FORMATTEDOUTPUT;
-        assert.equal(log[0], formattedOutput.title);
+        var filename = fullPath ? formattedOutput.fullPath : formattedOutput.filename;
+        assert.equal(log[0], filename);
         assert.equal(log[1], sort ? formattedOutput.contentSorted : formattedOutput.contentUnsorted);
         assert.equal(log[2], formattedOutput.count);
         if (bell) {
@@ -117,7 +127,7 @@ var TestParams = (function () {
     function TestParams() {
     }
     TestParams.LINTEDFILE = {
-        path: "/Users/adam.fitzpatrick/play/gulp-tslint-stylish/test/fixtures/TestSrc.ts"
+        path: "/Users/adam.fitzpatrick/play/tslint-stylish/specs/fixtures/TestSrc.ts"
     };
     TestParams.LINTOUTPUT = [
         {
@@ -151,7 +161,8 @@ var TestParams = (function () {
         }
     ];
     TestParams.FORMATTEDOUTPUT = {
-        title: "\n\u001b[4mTestSrc.ts\u001b[24m\n",
+        fullPath: "\n\u001b[4m" + process.cwd() + "/specs/fixtures/TestSrc.ts" + "\u001b[24m\n",
+        filename: "\n\u001b[4mTestSrc.ts\u001b[24m\n",
         contentSorted: "      \u001b[90mline 17\u001b[39m  \u001b[90mcol 24\u001b[39m" +
             "  \u001b[31m\' should be \"\u001b[39m\n      \u001b[90mline 19\u001b[39m  " +
             "\u001b[90mcol 28\u001b[39m  \u001b[31mfile should end with a " +

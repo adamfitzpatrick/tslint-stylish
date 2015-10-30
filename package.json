@@ -2,15 +2,15 @@
   "name": "gulp-tslint-stylish",
   "version": "1.0.4",
   "description": "Reporter for tslint along the lines of jshint-stylish",
-  "author": "Adam Fitzpatrick <pteropus2012@gmail.com>",
+  "author": "Adam Fitzpatrick <adam@muneris.net>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/pteropus/gulp-tslint-stylish/issues",
-    "email": "pteropus2012@gmail.com"
+    "url": "https://github.com/adamfitzpatrick/tslint-stylish/issues",
+    "email": "adam@muneris.net"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:pteropus/gulp-tslint-stylish.git"
+    "url": "git@github.com:adamfitzpatrick/tslint-stylish.git"
   },
   "main": "release/index.js",
   "keywords": [

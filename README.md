@@ -3,6 +3,9 @@ gulp-tslint-stylish
 
 ![Build Status](https://travis-ci.org/pteropus/gulp-tslint-stylish.svg?branch=master)
 
+*Please be aware that this package will be superceded by (tslint-stylish)[https://www.npmjs.com/package/tslint-stylish]
+in the near future.*
+
 Typescript lint reporter for gulp-tslint along the lines of jshint-stylish.  A special thanks to
 [Sindre Sorhus](https://github.com/sindresorhus) for the reporter design, and to
 [Panu Horsmalahti](https://github.com/panuhorsmalahti) for creating
@@ -31,7 +34,8 @@ gulp.task('lint', function () {
       .pipe(tslint.report(stylish, {
         emitError: false,
         sort: true,
-        bell: true
+        bell: true,
+        fullPath: true
       }));
 ```
 
@@ -43,3 +47,7 @@ Options
 - `bell`
     - Default is `true`
     - When true, emits the system bell with report.
+- `fullPath`
+    - Default is `true`
+    - When true, shows full file path name.  When false, shows only the filename.
+    - Contribution courtesy of [Sagar Vadodaria](https://github.com/sagarvadodaria)

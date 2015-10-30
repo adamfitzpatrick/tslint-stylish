@@ -26,6 +26,7 @@ module Stylish {
     interface IOptions {
         sort?: boolean;
         bell?: boolean;
+        fullPath?: boolean;
     }
 
     class Reporter {
@@ -35,21 +36,20 @@ module Stylish {
         private options: IOptions;
 
         constructor(linterOutputArray: Array<ILinterOutput>, file: Vinyl.File, options?: IOptions) {
-            this.fileName = chalk.underline(path.basename(file.path));
+            this.parseOptions(options);
+            this.parseFilename(file);
 
             this.linterOutputArray = linterOutputArray;
 
             this.count = "    " + chalk.red(logSymbols.error) + " " +
                 this.linterOutputArray.length + " error" +
                 (this.linterOutputArray.length > 1 ? "s" : "");
-
-            this.options = options || {};
         }
 
         getFailures(): string {
             var failures = [];
 
-            if (this.options.sort !== false) {
+            if (this.options.sort) {
                 this.linterOutputArray = _.sortBy(this.linterOutputArray, function (n) {
                     return n.startPosition.line;
                 });
@@ -68,10 +68,22 @@ module Stylish {
         }
 
         publish(): void {
-            process.stdout.write("\n" + this.fileName + "\n");
+            process.stdout.write("\n" + chalk.underline(this.fileName) + "\n");
             process.stdout.write(this.getFailures());
             process.stdout.write("\n\n" + this.count + "\n\n");
-            if (this.options.bell !== false) { process.stdout.write("\x07"); }
+            if (this.options.bell) { process.stdout.write("\x07"); }
+        }
+
+        private parseOptions(options): void {
+            this.options = options || {};
+            if (this.options.sort !== false) { this.options.sort = true; }
+            if (this.options.bell !== false) { this.options.bell = true; }
+            if (this.options.fullPath !== false) { this.options.fullPath = true; }
+        }
+
+        private parseFilename(file): void {
+            this.fileName = file.path || file;
+            if (!this.options.fullPath) { this.fileName = path.basename(this.fileName); }
         }
     }
 

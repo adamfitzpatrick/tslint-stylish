@@ -76,27 +76,37 @@ class Specs {
             });
 
             it("provides output as expected for minimum args", () => {
-                this.assertAll(this.logger.getLog(), true, true);
+                this.assertAll(this.logger.getLog(), true, true, true);
             });
 
             it("sorts formattedOutput by default and when requested, but not if sort = false", () => {
-                this.assertAll(this.logger.getLog(), true, true);
+                this.assertAll(this.logger.getLog(), true, true, true);
                 this.logger.clearLog();
                 stylish(TestParams.LINTOUTPUT, TestParams.LINTEDFILE, { sort: true });
-                this.assertAll(this.logger.getLog(), true, true);
+                this.assertAll(this.logger.getLog(), true, true, true);
                 this.logger.clearLog();
                 stylish(TestParams.LINTOUTPUT, TestParams.LINTEDFILE, { sort: false });
-                this.assertAll(this.logger.getLog(), false, true);
+                this.assertAll(this.logger.getLog(), false, true, true);
             });
 
             it("emits the system bell by default and when requested, but not if bell = false", () => {
-                this.assertAll(this.logger.getLog(), true, true);
+                this.assertAll(this.logger.getLog(), true, true, true);
                 this.logger.clearLog();
                 stylish(TestParams.LINTOUTPUT, TestParams.LINTEDFILE, { bell: true });
-                this.assertAll(this.logger.getLog(), true, true);
+                this.assertAll(this.logger.getLog(), true, true, true);
                 this.logger.clearLog();
                 stylish(TestParams.LINTOUTPUT, TestParams.LINTEDFILE, { bell: false });
-                this.assertAll(this.logger.getLog(), true, false);
+                this.assertAll(this.logger.getLog(), true, false, true);
+            });
+
+            it("shows the full path by default and when requested, but not if fullPath = false", () => {
+                this.assertAll(this.logger.getLog(), true, true, true);
+                this.logger.clearLog();
+                stylish(TestParams.LINTOUTPUT, TestParams.LINTEDFILE, { fullPath: true });
+                this.assertAll(this.logger.getLog(), true, true, true);
+                this.logger.clearLog();
+                stylish(TestParams.LINTOUTPUT, TestParams.LINTEDFILE, { fullPath: false });
+                this.assertAll(this.logger.getLog(), true, true, false);
             });
         });
 
@@ -114,7 +124,7 @@ class Specs {
             it("should be used to format report output from gulp-tslint", (done) => {
                 this.logger.clearLog();
                 linter(() => {
-                  this.assertAll(this.logger.getLog(), true, true);
+                  this.assertAll(this.logger.getLog(), true, true, true);
                   done();
                 });
             });
@@ -125,9 +135,10 @@ class Specs {
         this.logger.destroy();
     };
 
-    public assertAll(log: Array<string>, sort: boolean, bell: boolean) {
+    public assertAll(log: Array<string>, sort: boolean, bell: boolean, fullPath: boolean) {
         var formattedOutput = TestParams.FORMATTEDOUTPUT;
-        assert.equal(log[0], formattedOutput.title);
+        var filename = fullPath ? formattedOutput.fullPath : formattedOutput.filename;
+        assert.equal(log[0], filename);
         assert.equal(log[1], sort ? formattedOutput.contentSorted : formattedOutput.contentUnsorted);
         assert.equal(log[2], formattedOutput.count);
         if (bell) {
@@ -138,7 +149,7 @@ class Specs {
 
 class TestParams {
     static LINTEDFILE = {
-        path: "/Users/adam.fitzpatrick/play/gulp-tslint-stylish/test/fixtures/TestSrc.ts"
+        path: "/Users/adam.fitzpatrick/play/tslint-stylish/specs/fixtures/TestSrc.ts"
     };
     static LINTOUTPUT = [
       {
@@ -172,7 +183,8 @@ class TestParams {
       }
     ];
     static FORMATTEDOUTPUT = {
-        title: "\n\u001b[4mTestSrc.ts\u001b[24m\n",
+        fullPath: "\n\u001b[4m" + process.cwd() + "/specs/fixtures/TestSrc.ts" + "\u001b[24m\n",
+        filename: "\n\u001b[4mTestSrc.ts\u001b[24m\n",
         contentSorted: "      \u001b[90mline 17\u001b[39m  \u001b[90mcol 24\u001b[39m" +
             "  \u001b[31m\' should be \"\u001b[39m\n      \u001b[90mline 19\u001b[39m  " +
             "\u001b[90mcol 28\u001b[39m  \u001b[31mfile should end with a " +
