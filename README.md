@@ -42,8 +42,8 @@ Gulp
 
 ```
 var gulp = require('gulp');
-var tslint = require('gulptslint');
-var stylish = require('gulp-tslint-stylish');
+var tslint = require('gulp-tslint');
+var stylish = require('tslint-stylish');
 
 gulp.task('lint', function () {
     gulp.src('SourceFiles.ts')
