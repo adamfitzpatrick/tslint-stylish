@@ -1,6 +1,6 @@
 {
   "name": "tslint-stylish",
-  "version": "2.1.0-beta",
+  "version": "2.1.0",
   "description": "Reporter for tslint along the lines of jshint-stylish",
   "author": "Adam Fitzpatrick <adam@muneris.net>",
   "license": "MIT",
@@ -13,6 +13,9 @@
     "url": "git@github.com:adamfitzpatrick/tslint-stylish.git"
   },
   "main": "index.js",
+  "scripts": {
+    "tslint-test": "tslint specs/fixtures/TestSrc.ts -s . -t stylish"
+  },
   "keywords": [
     "gulp",
     "gulpplugin",
@@ -39,6 +42,7 @@
     "chalk": "^1.1.1",
     "lodash": "^3.10.1",
     "log-symbols": "^1.0.2",
-    "text-table": "^0.2.0"
+    "text-table": "^0.2.0",
+    "tslint": "^2.5.0"
   }
 }

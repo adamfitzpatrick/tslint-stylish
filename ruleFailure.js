@@ -1,3 +1,4 @@
+"use strict";
 /// <reference path="../typings/stylish.d.ts" />
 var _ = require("lodash");
 var RuleFailure = (function () {
@@ -33,5 +34,5 @@ var RuleFailure = (function () {
     RuleFailure.prototype.getStartPosition = function () { return this.startPosition; };
     RuleFailure.prototype.getEndPosition = function () { return this.endPosition; };
     return RuleFailure;
-})();
+}());
 module.exports = RuleFailure;
