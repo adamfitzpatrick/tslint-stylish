@@ -5,7 +5,6 @@ gulp prod
 
 EXITSTATUS=$?
 
-npm install tslint -g
-tslint specs/fixtures/TestSrc.ts -s . -t stylish
+npm run tslint-test
 
 exit $EXITSTATUS

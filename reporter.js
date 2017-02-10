@@ -1,4 +1,5 @@
 /// <reference path="../typings/stylish.d.ts" />
+"use strict";
 var chalk = require("chalk");
 var table = require("text-table");
 var logSymbols = require("log-symbols");
@@ -68,5 +69,5 @@ var Reporter = (function () {
         }
     };
     return Reporter;
-})();
+}());
 module.exports = Reporter;

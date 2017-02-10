@@ -11,11 +11,11 @@
     "no-arg": true,
     "no-bitwise": true,
     "no-console": [true,
-        "debug",
-        "info",
-        "time",
-        "timeEnd",
-        "trace"
+      "debug",
+      "info",
+      "time",
+      "timeEnd",
+      "trace"
     ],
     "no-construct": true,
     "no-debugger": true,
@@ -32,10 +32,10 @@
     "no-unreachable": true,
     "no-use-before-declare": true,
     "one-line": [true,
-        "check-open-brace",
-        "check-catch",
-        "check-else",
-        "check-whitespace"
+      "check-open-brace",
+      "check-catch",
+      "check-else",
+      "check-whitespace"
     ],
     "quotemark": [true, "double"],
     "radix": true,
@@ -43,11 +43,11 @@
     "triple-equals": [true, "allow-null-check"],
     "variable-name": false,
     "whitespace": [true,
-        "check-branch",
-        "check-decl",
-        "check-operator",
-        "check-separator",
-        "check-type"
+      "check-branch",
+      "check-decl",
+      "check-operator",
+      "check-separator",
+      "check-type"
     ]
   }
 }

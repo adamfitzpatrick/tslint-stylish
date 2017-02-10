@@ -1,4 +1,5 @@
 /// <reference path="../typings/stylish.d.ts"/>
+"use strict";
 var _ = require("lodash");
 var Reporter = require("./reporter");
 var Formatter = (function () {
@@ -24,5 +25,5 @@ var Formatter = (function () {
         });
     };
     return Formatter;
-})();
+}());
 exports.Formatter = Formatter;
