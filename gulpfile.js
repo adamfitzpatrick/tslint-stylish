@@ -1,83 +1,35 @@
+const gulp = require("gulp");
+const path = require("path");
+// const spawnMocha = require("gulp-spawn-mocha");
+// const plumber = require("gulp-plumber");
+const webpack = require("webpack");
+const tslint = require("gulp-tslint");
+
+const indexConfig = require("./webpack.config");
+const formatterConfig = require("./webpack.formatter.config");
+
+const webpacker = (configFunction) => {
+    return new Promise((resolve, reject) => {
+        webpack(configFunction()).run((err, stats) => {
+            if (err) { return reject(err); }
+            resolve(stats);
+        });
+    })
+};
+
 (function () {
-    "use strict";
-
-    var del = require("del");
-    var gulp = require("gulp");
-    var mocha = require("gulp-mocha");
-    var tslint = require("gulp-tslint");
-    var tsc = require("gulp-typescript");
-    var watch = require("gulp-watch");
-    var batch = require("gulp-batch");
-    var debug = require("gulp-debug");
-    var minimist = require("minimist");
-    require("gulp-help")(gulp, {
-        description: "Help listing"
+    gulp.task("webpack", () => {
+        const webpackers = [];
+        webpackers.push(webpacker(indexConfig));
+        webpackers.push(webpacker(formatterConfig));
+        return Promise.all(webpackers);
     });
 
-    var options = minimist(process.argv.slice(2));
-    function isProd() {
-        return options._[0] === "prod";
-    }
-
-    var typescriptOptions = {
-        declarationFiles: false,
-        noExternalResolve: false,
-        module: "commonjs"
-    };
-
-    function clean(cb) {
-        del([
-            "compiled",
-            "index.js",
-            "stylishFormatter.js",
-            "reporter.js",
-            "ruleFailure.js"
-        ]);
-        cb();
-    }
-
-    gulp.task("clean", clean);
-
-    function tsCompile() {
-        return gulp.src("src/**/*.ts")
-            .pipe(tslint())
-            .pipe(tslint.report("verbose", {
-                emitError: isProd()
+    gulp.task("tslint", () =>
+        gulp.src("./src/reporter/reporter.ts")
+            .pipe(tslint({
+                formatter: "stylish"
             }))
-            .pipe(tsc(typescriptOptions))
-            .js.pipe(gulp.dest("compiled/src"));
-    }
-
-    function specCompile() {
-        return gulp.src(["specs/**/*.ts", "!specs/fixtures/**/*"])
-            .pipe(tslint())
-            .pipe(tslint.report("verbose", {
-                emitError: isProd()
-            }))
-            .pipe(tsc(typescriptOptions))
-            .js.pipe(gulp.dest("compiled/specs"));
-    }
-
-    gulp.task("compile:src", "Compile source typescript to javascript.", ["clean"], tsCompile);
-    gulp.task("compile:spec", "Compile typescript specs to javascript.", ["clean"], specCompile);
-
-    function unitTests() {
-        return gulp.src("compiled/specs/*.spec.js")
-            .pipe(mocha({reporter: "spec"}));
-    }
-
-    gulp.task("default", "Compile source and specs to javascript and run tests.", ["compile:src", "compile:spec"], unitTests);
-
-    function prod() {
-        return gulp.src([
-            "compiled/src/*.js"
-        ])
-            .pipe(gulp.dest("./"));
-    }
-    gulp.task("prod", "Build for production: fails on error.", ["default"], prod);
-
-    gulp.task("watch", function () {
-        gulp.watch(["src/**/*.ts", "specs/**/*.ts"], ["default"]);
-    });
-
+            .pipe(tslint.report())
+    );
 }());

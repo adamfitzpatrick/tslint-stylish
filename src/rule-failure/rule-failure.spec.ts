@@ -1,5 +1,9 @@
-/// <reference path="../typings/stylish.d.ts" />
+describe("RuleFailure", () => {
+    beforeEach(() => {
 
+    })
+});
+/*
 var assert = require("assert");
 
 import RuleFailure = require("../src/ruleFailure");
@@ -57,3 +61,4 @@ class RuleFailureSpec {
 }
 
 export = RuleFailureSpec;
+*/

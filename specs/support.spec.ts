@@ -1,5 +1,5 @@
-var util = require("util");
-import RuleFailure = require("../src/ruleFailure");
+import { PalantirRuleFailureObject, RuleFailureObject } from "../src/models/rule-failure-object.model";
+const util = require("util");
 
 export class LogInterceptor {
     private static _instance: LogInterceptor = null;
@@ -22,15 +22,11 @@ export class LogInterceptor {
         };
     }
 
-    public getLog(): Array<string> {
-        return this._log;
-    }
+    getLog(): Array<string> { return this._log; }
 
-    public clearLog(): void {
-        this._log = [];
-    }
+    clearLog(): void { this._log = []; }
 
-    public destroy(): void {
+    destroy(): void {
         process.stdout.write = this._write;
         console.log = this._clog;
         LogInterceptor._instance = null;
@@ -38,23 +34,21 @@ export class LogInterceptor {
 }
 
 export class TestConstants {
-    static LINTEDFILE = {
-        path: process.cwd() + "/specs/fixtures/TestSrc.ts"
-    };
-    static PALANTIRLINTOUTPUT: Stylish.IPalantirRuleFailureObject[] = [
+    static LINTEDFILE = { path: process.cwd() + "/specs/fixtures/TestSrc.ts" };
+    static PALANTIRLINTOUTPUT: PalantirRuleFailureObject[] = [
         {
             "fileName": "NOFILE",
             "failure": "file should end with a newline",
             "startPosition": {
                 "position": 442,
-                "lineAndCharacter": {
+                "location": {
                     "line": 18,
                     "character": 27
                 }
             },
             "endPosition": {
                 "position": 442,
-                "lineAndCharacter": {
+                "location": {
                     "line": 18,
                     "character": 27
                 }
@@ -65,14 +59,14 @@ export class TestConstants {
             "failure": "\' should be \"",
             "startPosition": {
                 "position": 391,
-                "lineAndCharacter": {
+                "location": {
                     "line": 16,
                     "character": 23
                 }
             },
             "endPosition": {
                 "position": 397,
-                "lineAndCharacter": {
+                "location": {
                     "line": 16,
                     "character": 29
                 }
@@ -80,7 +74,7 @@ export class TestConstants {
             "ruleName": "quotemark"
         }
     ];
-    static LINTOUTPUT: Stylish.IRuleFailureObject[] = [
+    static LINTOUTPUT: RuleFailureObject[] = [
         {
             "fileName": "NOFILE",
             "failure": "file should end with a newline",
@@ -126,6 +120,7 @@ export class TestConstants {
         bell: "\u0007"
     };
 }
+
 export function clone(object: Object): Object {
     return JSON.parse(JSON.stringify(object));
 }

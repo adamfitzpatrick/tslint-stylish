@@ -1,6 +1,4 @@
-/// <reference path="../typings/stylish.d.ts" />
-
-var stylish = require(process.cwd() + "/compiled/src/index");
+/*var stylish = require(process.cwd() + "/compiled/src/index");
 var assert = require("assert");
 var tslint = require("gulp-tslint");
 
@@ -131,3 +129,4 @@ class ReporterSpec {
 }
 
 export = ReporterSpec;
+*/

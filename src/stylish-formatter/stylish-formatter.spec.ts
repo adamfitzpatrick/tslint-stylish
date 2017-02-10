@@ -1,6 +1,4 @@
-/// <reference path="../typings/node.d.ts" />
-/// <reference path="../typings/mocha.d.ts" />
-
+/*
 var assert = require("assert");
 var fs = require("fs");
 
@@ -42,3 +40,4 @@ class StylishFormatterSpecs {
 }
 
 export = StylishFormatterSpecs;
+*/

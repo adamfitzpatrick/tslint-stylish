@@ -1,4 +1,6 @@
 node_modules/
 *.log
 .idea
-compiled/
+dist/
+tmp/
+stylishFormatter.js
